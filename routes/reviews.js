@@ -67,11 +67,7 @@ router.get('/allwithproducts', async (req, res) => {
 
 router.get('/singleProduct/:product_id', async (req, res) => {
 
-
-
     var getWithReview = await Reviews.find({productId: req.params.product_id}).populate('userId productId');
-
-    
     res.json({ status: 1, data: getWithReview });
 
 });
