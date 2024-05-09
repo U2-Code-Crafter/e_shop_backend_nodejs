@@ -6,12 +6,20 @@ require("./config/db/conn");
 
 
 const app = express();
+app.use(bodyParser.json());
 const port = process.env.PORT || 8000;
 // const bodyParser = require('body-parser')
 // app.use(bodyParser.urlencoded({ extended: false }))
 // app.use(bodyParser.json());
 
 app.use(express.json());
+      
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: ' dzkcbt6od',
+    api_key: '263175638554844',
+    api_secret: 'j7Enmiu2pHfHlbZ3yPDvaSJ3j5U'
+  });
 
 app.use(morgan("dev"))
 app.get("/", (req, res) => {

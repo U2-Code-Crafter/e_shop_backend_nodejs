@@ -4,7 +4,7 @@ const router = express.Router();
 const bcrypt = require("bcryptjs");
 const salt = 3;
 const User = require("../models/users");
-
+const cloudinary = require('cloudinary').v2;
 
 
 //create user
@@ -60,7 +60,24 @@ router.post('/update/:id', async (req, res) => {
 
     res.json({ status: 1, data: data });
 
+
 });
+
+
+router.post('/update-img/:id', async (req, res) => {
+    try {
+        const image = req.body.image;
+        const uploadedImage = await cloudinary.uploader.upload(`data:image/jpeg;base64,${image}`);
+        var data = await User.findByIdAndUpdate(req.params.id, image, { new: true })
+        
+        res.status(200).json({ data: data, image_url: uploadedImage.url });
+      } catch (error) {
+        console.error('Error uploading image:', error);
+        res.status(500).json({ error: 'Failed to upload image' });
+      }
+
+});
+
 //get all users
 
 router.get('/all', async (req, res) => {

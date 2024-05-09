@@ -10,7 +10,6 @@ const Product = require("../models/products");
 
 
 //create user
-
 router.post('/create', async (req, res) => {
     // console.log(req.body, 13)
     var data = await new Product(req.body).save();
